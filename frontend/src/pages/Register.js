@@ -1,5 +1,6 @@
 import api from '../api';
 import apiState from '../apiState';
+import apiInstagram from '../api.Instagram';
 import history from '../history';
 import React, { useState, useEffect } from 'react';
 
@@ -10,8 +11,11 @@ export default function Register() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [city, setCity] = useState("")
   const [state, setState] = useState("")
   const [states, setStates] = useState([])
+  const [followers, setFollowers] = useState([])
+  const [instagramProfile, setInstagramProfile] = useState('')
 
   const [flagRadioButton, setFlagRadioButton] = useState(true)
   const [flagRadioButton2, setFlagRadioButton2] = useState(false)
@@ -19,15 +23,32 @@ export default function Register() {
   const [flagRadioButton4, setFlagRadioButton4] = useState(false)
 
   var estado = state
+  //https://www.instagram.com/bianeaime/?__a=1
+  useEffect(() => {
+    apiState
+      .get(`/${state}/municipios`)
+      .then((response) => setStates(response.data))
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      });
 
-  // useEffect(() => {
-  //   apiState
-  //     .get("/ac")
-  //     .then((response) => console.log("hey",response.data))
-  //     .catch((err) => {
-  //       console.error("ops! ocorreu um erro" + err);
-  //     });
-  // }, []);
+      console.log(states[0])
+  }, [state]);
+
+   async function getFollowers (){
+
+    console.log('-->',instagramProfile)
+
+   api
+    .post('/followers',{user: instagramProfile})
+    .then((response) => console.log(response))
+    .catch((err) => {
+      console.error("ops! ocorreu um erro" + err);
+    });
+
+   
+    
+   }
 
   async function submit (){
 
@@ -70,10 +91,10 @@ export default function Register() {
 
   async function getStateField(){
     var select = document.getElementById("states");
-    var text = select.options[select.selectedIndex].value
+    var selectState = select.options[select.selectedIndex].value
 
-    setState(text)
-    console.log("to aki" + text)
+    setState(selectState)
+    console.log("to aki" + selectState)
 
     
 
@@ -81,11 +102,12 @@ export default function Register() {
   }
 
   async function getCityField(){
-    apiState.get(`/${state}/municipios`).then((response) => console.log(response.data)
-    )
-    .catch((err) => {
-      console.error("ops! ocorreu um erro" + err);
-    });
+    var select = document.getElementById("citys");
+    var selectCity = select.options[select.selectedIndex].value
+
+    setCity(selectCity)
+    console.log("city é" + selectCity)
+
   }
 
   return (
@@ -179,16 +201,17 @@ export default function Register() {
 
                 <div class="col-sm">
                   <h6>Cidade</h6>
-                  <select onClick={()=> getCityField() } class="form-select" aria-label="Default select example">
+                  <select onClick={()=> getCityField()} id="citys" name="citys" class="form-select" aria-label="Default select example">
                     <option selected>Escolha a cidade</option>
+                    
                     {
-                      // states &&
+                      states &&
 
-                      // states.map( (state) =>{
-                      //   return(
-                      //     <option value="1">{state.nome}</option>
-                      //   )
-                      // })
+                      states.map( (state) =>{
+                        return(
+                          <option value={state.nome}>{state.nome}</option>
+                        )
+                      })
                     }
                     
                     
@@ -198,19 +221,32 @@ export default function Register() {
                 <div class="col-sm">
                   <h6>Posição Política</h6>
                   <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option selected>Escolha seu Posicionamento</option>
+                    <option value="Centro">Centro</option>
+                    <option value="Centro-direita">Centro-direita</option>
+                    <option value="Centro-esquerda">Centro-esquerda</option>
+                    <option value="Esquerda">Esquerda</option>
+                    <option value="Liberal">Liberal</option>
+                    <option value="Anarquismo">Anarquismo</option>
+                    <option value="Sem Preferencia Politica">Sem Preferencia Politica</option>
+                    
+
+
                   </select>
                 </div>
                 <div class="col-sm">
                   <h6>Religiosidade</h6>
                   <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option selected>Escolha um Segmento</option>
+                    <option value="Cristianismo">Cristianismo</option>
+                    <option value="Agnóstico">Agnóstico</option>
+                    <option value="Espiritismo">Espiritismo</option>
+                    <option value="Sihkismo">Sihkismo</option>
+                    <option value="Budismo">Budismo</option>
+                    <option value="Hinduísmo">Hinduísmo</option>
+                    <option value="Islamismo">Islamismo</option>
+                    <option value="Agnostico">Agnostico</option>
+                    <option value="Ateu">Ateu</option>
                   </select>
                 </div>
               </div>
@@ -221,16 +257,26 @@ export default function Register() {
             
             
             <div class="container mt-3">
+              
+              <div class="row" >
+                <div class="col-12">
+                  <input name="instagramLink" onChange={e => setInstagramProfile(e.target.value)} id="instagramLink" style={{width:"100%"}}></input>
+                </div>
+              </div>
+
               <div class="row">
                 <div class="col-sm">
                   <h6>Link do seu instagram</h6>
+                  <button onClick={()=> getFollowers()}>Buscar Perfil</button>
                 </div>
               </div>
-              <div class="row" >
-                <div class="col-12">
-                  <input name="instagramLink" id="instagramLink" style={{width:"100%"}}></input>
-                </div>
-              </div>
+
+              {
+                followers && (
+                  <h1>to existindo</h1>
+                )
+              }
+
             </div>
 
             <div class="container mt-3">
