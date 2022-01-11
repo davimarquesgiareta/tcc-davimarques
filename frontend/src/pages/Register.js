@@ -14,8 +14,10 @@ export default function Register() {
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
   const [states, setStates] = useState([])
-  const [followers, setFollowers] = useState([])
+  const [followers, setFollowers] = useState('')
   const [instagramProfile, setInstagramProfile] = useState('')
+  const [tagChosen, setTagChosen] = useState('')
+  const [tags, setTags] = useState([])
 
   const [flagRadioButton, setFlagRadioButton] = useState(true)
   const [flagRadioButton2, setFlagRadioButton2] = useState(false)
@@ -35,13 +37,24 @@ export default function Register() {
       console.log(states[0])
   }, [state]);
 
+  useEffect(() => {
+    api
+    .post('/tags',{tag: tagChosen})
+    .then((response) => setTags(response.data))
+    .catch((err) => {
+      console.error("ops! ocorreu um erro" + err);
+    })
+  }, [tagChosen]);
+
+  
+
    async function getFollowers (){
 
     console.log('-->',instagramProfile)
 
    api
     .post('/followers',{user: instagramProfile})
-    .then((response) => console.log(response))
+    .then((response) => setFollowers(response.data.followers))
     .catch((err) => {
       console.error("ops! ocorreu um erro" + err);
     });
@@ -87,6 +100,42 @@ export default function Register() {
       setFlagRadioButton3(false)
       setFlagRadioButton4(true)
     }
+  }
+
+  function toggleRadioButtonTags(radioButton){
+    console.log(radioButton)
+    setTagChosen(radioButton)
+
+
+    
+  }
+
+  function getCheckBoxes(){
+    // var checkedValue = document.querySelector('.form-checkbox-input:checked').value;
+
+    // var checkedValue = null; 
+    // var inputElements = document.getElementsByClassName('form-checkbox-input');
+    // for(var i=0; inputElements[i]; ++i){
+    //       if(inputElements[i].checked){
+    //           checkedValue = inputElements[i].value;
+    //           break;
+    //       }
+    // }
+
+    var checkboxes = []
+
+
+    var markedCheckbox = document.getElementsByName('pl');
+    for (var checkbox of markedCheckbox) {
+      if (checkbox.checked)
+        // console.log(checkbox.value + ' ');
+        checkboxes.push(checkbox.value)
+    }
+
+    // setTagChosen(checkboxes)
+    console.log(checkboxes)
+   
+    
   }
 
   async function getStateField(){
@@ -273,7 +322,11 @@ export default function Register() {
 
               {
                 followers && (
-                  <h1>to existindo</h1>
+                  <div>
+                    <h3>{instagramProfile}</h3>
+                    <h4>Seguidores : {followers}</h4>
+                  </div>
+                  
                 )
               }
 
@@ -290,10 +343,11 @@ export default function Register() {
             <div class="container mt-3 ">
               <div class="form-check form-check-inline mr-5">
                 <input
+                  onClick={()=> toggleRadioButtonTags('business')} 
                   class="form-check-input"
                   type="radio"
                   name="inlineRadioOptions"
-                  id="inlineRadio1"
+                  id="business"
                   value="option1"
                 />
                 <label class="form-check-label" for="inlineRadio1">Business</label>
@@ -301,10 +355,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('photograph')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="photograph"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Fotografia</label>
@@ -312,10 +367,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('video')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="video"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Vídeo</label>
@@ -323,10 +379,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('music')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="music"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Música</label>
@@ -334,10 +391,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('education')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="education"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Educação</label>
@@ -348,10 +406,11 @@ export default function Register() {
             <div class="container mt-3 ">
               <div class="form-check form-check-inline mr-5">
                 <input
+                  onClick={()=> toggleRadioButtonTags('food')}
                   class="form-check-input"
                   type="radio"
                   name="inlineRadioOptions"
-                  id="inlineRadio1"
+                  id="food"
                   value="option1"
                 />
                 <label class="form-check-label" for="inlineRadio1">Comida</label>
@@ -359,10 +418,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('trip')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="trip"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Viagem</label>
@@ -370,10 +430,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('events')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="events"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Eventos</label>
@@ -381,10 +442,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('games')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="games"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Games</label>
@@ -392,10 +454,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('artist')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="artist"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Artista</label>
@@ -403,10 +466,11 @@ export default function Register() {
 
             <div class="form-check form-check-inline mr-5">
               <input
+                onClick={()=> toggleRadioButtonTags('geek')}
                 class="form-check-input"
                 type="radio"
                 name="inlineRadioOptions"
-                id="inlineRadio2"
+                id="geek"
                 value="option1"
               />
               <label class="form-check-label" for="inlineRadio2">Geek</label>
@@ -415,11 +479,42 @@ export default function Register() {
             </div>
 
             <div class="container bg-warning mt-3 mb-2">
-              Fazer um map da rota dependendo do radio button selecionado kkkkk
+              {
+                tagChosen && (
+                 <>
+                 <div class="form-check">
+                    {
+                      tags && 
+                      tags.map( (tag)=>{
+                        return(
+                          <>
+                        <input class="form-checkbox-input" name="pl" type="checkbox" value={tag} id="flexCheckDefault"/>
+                        <label class="form-check-label ml-1 mr-2" for="flexCheckDefault">
+                          {tag}
+                        </label>
+                        
+                        </>
+                        )
+                      })
+                       
+
+                      
+                    }
+                  
+                 
+                </div>
+                
+                 </>
+                )
+              }
             </div>
 
             <div class="d-flex justify-content-end align-items-center mb-3">
-              <button type="button" class="btn btn-primary w-25" onClick={()=> console.log("clikquei")}>Adicionar Tags</button>
+              <button type="button" class="btn btn-primary w-25" onClick={()=> getCheckBoxes()}>Adicionar Tags</button>
+            </div>
+
+            <div class="d-flex justify-content-end align-items-center mb-3">
+              <button type="button" class="btn btn-primary w-25" onClick={()=> console.log('tags', tags)}>VER</button>
             </div>
 
             <div class="container">
