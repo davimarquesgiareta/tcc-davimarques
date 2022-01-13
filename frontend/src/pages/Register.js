@@ -14,12 +14,18 @@ export default function Register() {
   const [city, setCity] = useState("")
   const [state, setState] = useState("")
   const [states, setStates] = useState([])
+  const [politic, setPolitic] = useState('')
+  const [religiosity, setReliogisity] = useState('')
   const [followers, setFollowers] = useState('')
   const [instagramProfile, setInstagramProfile] = useState('')
   const [tagChosen, setTagChosen] = useState('')
   const [tags, setTags] = useState([])
+  const [userTags, setUserTags] = useState([])
+  const [whatsapp, setWhatsapp]= useState('')
+  const [twitter, setTwitter] = useState('')
+  const [youtube, setYoutube] = useState('')
 
-  const [flagRadioButton, setFlagRadioButton] = useState(true)
+  const [flagRadioButton, setFlagRadioButton] = useState(false)
   const [flagRadioButton2, setFlagRadioButton2] = useState(false)
   const [flagRadioButton3, setFlagRadioButton3] = useState(false)
   const [flagRadioButton4, setFlagRadioButton4] = useState(false)
@@ -62,6 +68,27 @@ export default function Register() {
    
     
    }
+
+  function submitTeste(){
+    
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+      confirmpassword: confirmPassword,
+      city: city,
+      politic: politic,
+      instagramLink: `https://instagram.com/${instagramProfile}`,
+      followers: followers,
+      tags: userTags,
+      whatsapp: whatsapp,
+      socialMedias: [youtube, twitter]
+
+    }
+
+    console.log(user)
+    
+  } 
 
   async function submit (){
 
@@ -133,8 +160,12 @@ export default function Register() {
     }
 
     // setTagChosen(checkboxes)
-    console.log(checkboxes)
-   
+    
+    //var allChecks = userTags + checkboxes
+    
+    var allChecks = [...userTags, ...checkboxes]
+    
+    setUserTags(allChecks)
     
   }
 
@@ -157,6 +188,22 @@ export default function Register() {
     setCity(selectCity)
     console.log("city é" + selectCity)
 
+  }
+
+  async function getPolitic(){
+    var select = document.getElementById("politic");
+    var selectPolitic = select.options[select.selectedIndex].value
+
+    setPolitic(selectPolitic)
+    
+  }
+
+  async function getReliogisity(){
+    var select = document.getElementById("reliogisity");
+    var selectReliogisity = select.options[select.selectedIndex].value
+
+    setReliogisity(selectReliogisity)
+    
   }
 
   return (
@@ -269,7 +316,7 @@ export default function Register() {
 
                 <div class="col-sm">
                   <h6>Posição Política</h6>
-                  <select class="form-select" aria-label="Default select example">
+                  <select onClick={()=> getPolitic()} id="politic" name="politic"  class="form-select" aria-label="Default select example">
                     <option selected>Escolha seu Posicionamento</option>
                     <option value="Centro">Centro</option>
                     <option value="Centro-direita">Centro-direita</option>
@@ -285,7 +332,7 @@ export default function Register() {
                 </div>
                 <div class="col-sm">
                   <h6>Religiosidade</h6>
-                  <select class="form-select" aria-label="Default select example">
+                  <select onClick={()=> getReliogisity()} class="form-select"id="reliogisity" name="reliogisity" aria-label="Default select example">
                     <option selected>Escolha um Segmento</option>
                     <option value="Cristianismo">Cristianismo</option>
                     <option value="Agnóstico">Agnóstico</option>
@@ -337,7 +384,16 @@ export default function Register() {
             </div>
 
             <div class="container mt-3">
-             <h5>Suas Tags: <label class="text-danger">Nenhuma Selecionada</label>  </h5>
+              <h4>Suas tags: </h4>
+              {userTags.map( (tag)=> {
+                return(
+                  <>
+                  <label class="text-danger mr-1">{tag}</label>
+                  <label class="text-danger mr-1">|</label>
+                  </>
+                )
+              } )}
+             
             </div>
 
             <div class="container mt-3 ">
@@ -514,7 +570,7 @@ export default function Register() {
             </div>
 
             <div class="d-flex justify-content-end align-items-center mb-3">
-              <button type="button" class="btn btn-primary w-25" onClick={()=> console.log('tags', tags)}>VER</button>
+              <button type="button" class="btn btn-primary w-25" onClick={()=> console.log('tags', userTags)}>VER</button>
             </div>
 
             <div class="container">
@@ -525,7 +581,7 @@ export default function Register() {
               </div>
               <div class="row mb-3">
                 <div class="col-9">
-                  <input style={{width:"100%"}}></input>
+                  <input onChange={e => setWhatsapp(e.target.value)} style={{width:"100%"}}></input>
                 </div>
               </div>
             </div>
@@ -574,7 +630,7 @@ export default function Register() {
                     </div>
                     <div className='row'>
                       <div className='col-9'>
-                        <input style={{width:"100%"}}></input>
+                        <input onChange={e => setYoutube(e.target.value)} style={{width:"100%"}}></input>
                       </div>
                     </div>
                   </div>
@@ -587,14 +643,14 @@ export default function Register() {
                     </div>
                     <div className='row'>
                       <div className='col-9'>
-                        <input style={{width:"100%"}}></input>
+                        <input onChange={e => setTwitter(e.target.value)} style={{width:"100%"}}></input>
                       </div>
                     </div>
                   </div>
 
                   <div class="d-flex justify-content-center align-items-center mb-3 mt-3">
                     <a href='/login' for="exampleInputPassword1" class="mr-3 ">Voltar</a>
-                    <button type="button" class="btn btn-primary w-25" onClick={()=> submit()}>Criar Conta</button>
+                    <button type="button" class="btn btn-primary w-25" onClick={()=> submitTeste()}>Criar Conta</button>
                   </div>
 
                   
@@ -608,7 +664,7 @@ export default function Register() {
               flagRadioButton4 && (
                 <div class="d-flex justify-content-end align-items-center mb-3">
                   <a href='/login' for="exampleInputPassword1" class="mr-3 ">Voltar</a>
-                  <button type="button" class="btn btn-primary w-25" onClick={()=> submit()}>Criar Conta</button>
+                  <button type="button" class="btn btn-primary w-25" onClick={()=> submitTeste()}>Criar Conta x</button>
                 </div>
               )
             }
@@ -620,7 +676,7 @@ export default function Register() {
         flagRadioButton2 && (
           <div class="d-flex justify-content-end align-items-center mb-3">
             <a href='/login' for="exampleInputPassword1" class="mr-3 ">Voltar</a>
-            <button type="button" class="btn btn-primary w-25" onClick={()=> submit()}>Criar Conta</button>
+            <button type="button" class="btn btn-primary w-25" onClick={()=> submitTeste()}>Criar Conta Y</button>
           </div>
         )
       }
