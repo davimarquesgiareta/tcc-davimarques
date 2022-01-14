@@ -77,7 +77,9 @@ export default function Register() {
       password: password,
       confirmpassword: confirmPassword,
       city: city,
+      state: state,
       politic: politic,
+      religiosity: religiosity,
       instagramLink: `https://instagram.com/${instagramProfile}`,
       followers: followers,
       tags: userTags,
@@ -85,6 +87,8 @@ export default function Register() {
       socialMedias: [youtube, twitter]
 
     }
+
+    
 
     console.log(user)
     
@@ -98,8 +102,19 @@ export default function Register() {
         name: name,
         email: email,
         password: password,
-        confirmpassword: confirmPassword 
+        confirmpassword: confirmPassword,
+        city: city,
+        state: state,
+        politic: politic,
+        religiosity: religiosity,
+        instagramLink: `https://instagram.com/${instagramProfile}`,
+        followers: followers,
+        tags: userTags,
+        whatsapp: whatsapp,
+        socialMedias: [youtube, twitter]
       }); 
+
+      alert("Conta criada com sucesso!")
 
       history.push('/login');
     }
@@ -356,13 +371,13 @@ export default function Register() {
               
               <div class="row" >
                 <div class="col-12">
-                  <input name="instagramLink" onChange={e => setInstagramProfile(e.target.value)} id="instagramLink" style={{width:"100%"}}></input>
+                  <input name="instagramLink" placeholder='Ex: davimgcb' onChange={e => setInstagramProfile(e.target.value)} id="instagramLink" style={{width:"100%"}}></input>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-sm">
-                  <h6>Link do seu instagram</h6>
+                  <h6>Usuário do Instagram</h6>
                   <button onClick={()=> getFollowers()}>Buscar Perfil</button>
                 </div>
               </div>
@@ -650,10 +665,9 @@ export default function Register() {
 
                   <div class="d-flex justify-content-center align-items-center mb-3 mt-3">
                     <a href='/login' for="exampleInputPassword1" class="mr-3 ">Voltar</a>
-                    <button type="button" class="btn btn-primary w-25" onClick={()=> submitTeste()}>Criar Conta</button>
+                    <button type="button" class="btn btn-primary w-25" onClick={()=> submit()}>Criar Conta</button>
                   </div>
 
-                  
                 </div>
 
                 
@@ -664,7 +678,7 @@ export default function Register() {
               flagRadioButton4 && (
                 <div class="d-flex justify-content-end align-items-center mb-3">
                   <a href='/login' for="exampleInputPassword1" class="mr-3 ">Voltar</a>
-                  <button type="button" class="btn btn-primary w-25" onClick={()=> submitTeste()}>Criar Conta x</button>
+                  <button type="button" class="btn btn-primary w-25" onClick={()=> submit()}>Criar Conta x</button>
                 </div>
               )
             }
