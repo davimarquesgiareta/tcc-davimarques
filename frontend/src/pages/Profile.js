@@ -50,6 +50,30 @@ export default function Profile() {
             <p> <strong>Minhas Tags: </strong> 
             {user.tags + ''}
             </p>
+
+            <div className='row' >
+             <div className='col-1'>
+               {
+                 console.log(user.socialMedias)
+               }
+               {
+                 
+                 user.socialMedias && <h2> to existindo</h2>
+               }
+               
+             <SocialMediaIconsReact  borderColor="rgba(0,0,0,0.25)" icon="twitter" iconColor="rgba(255,255,255,1)" backgroundColor="rgba(26,166,233,1)" url="https://some-website.com/my-social-media-url" size="48" />
+             </div>
+             <div className='col-5'>
+             <SocialMediaIconsReact borderColor="rgba(0,0,0,0.25)" icon="youtube" iconColor="rgba(255,255,255,1)" backgroundColor="rgba(255,36,0,1)" url="https://some-website.com/my-social-media-url" size="48" />
+             </div>
+            </div>
+            
+            <div style={{background:"yellow" }}>
+            
+            
+            
+            </div>
+            
                       
             <a href={`https://api.whatsapp.com/send?phone=55 ${user.whatsapp}&text=Olá, vi seu perfil no Influencers Search, e gostaria fazer uma parceria!`} class="float" target="_blank">
             <i  class="fa fa-whatsapp my-float"></i>
