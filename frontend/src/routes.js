@@ -6,6 +6,9 @@ import { Context } from './Context/AuthContext';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+import MyInfluencers from './pages/MyInfluencers';
+import MeetInfluencers from './pages/MeetInfluencers';
+
 
 function CustomRoute({ isPrivate, ...rest }) {
   const { loading, authenticated } = useContext(Context);
@@ -27,6 +30,8 @@ export default function Routes() {
       <CustomRoute exact path="/" component={Login} />
       <CustomRoute exact path="/login" component={Login} />
       <CustomRoute isPrivate exact path="/profile" component={Profile} />
+      <CustomRoute isPrivate exact path="/meusinfluencers" component={MyInfluencers} />
+      <CustomRoute isPrivate exact path="/influencers" component={MeetInfluencers} />
       <CustomRoute exact path="/register" component={Register} />
     </Switch>
   );

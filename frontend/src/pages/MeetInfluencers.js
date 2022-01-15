@@ -16,15 +16,12 @@ import "../styles/Profile.css"
 import './../styles/button.css'
 import './../styles/whatsappicon.css'
 
-export default function Profile() {
+export default function MeetInfluencers() {
 
   const [user, setUser] = useState({})
 
   const emailStorage = localStorage.getItem('email');
   const id = localStorage.getItem('id');
-
-  var link = "twitter.com/davizerashow"
-
   const email = emailStorage.replace(/['"]+/g, '')
 
   const { handleLogout } = useContext(Context);
@@ -38,23 +35,12 @@ export default function Profile() {
   }, []);
 
  
-  
-  // console.log('ai', typeof(user.socialMedias) )
-
-
   return(
     <>
     <div class="wrapper">
        
         <NavBar user={user}/>
-
-
-        {/* <main>
-          <Switch>
-            <Route path="/perfil" component={MeetInfluencer}/>
-          </Switch>
-        </main> */}
-        <MyProfile user={user} />
+        <h1>meet influencer</h1>
         
     </div>
     </>

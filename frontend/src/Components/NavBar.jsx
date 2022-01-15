@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 export default function NavBar(props){
 
@@ -14,13 +15,16 @@ export default function NavBar(props){
             <ul class="list-unstyled components">
                 <p>Influencers Search 1.0</p>
                 <li class="active">
-                    <a href="#homeSubmenu">Meu Perfil</a>
+                    <Link to="profile"> Meu Perfil </Link>
+                    {/* <a href="#homeSubmenu">Meu Perfil</a> */}
                 </li>
                 <li>
-                    <a href="#">Meus Influencers</a>
+                    <Link to="meusinfluencers"> Meus Influencers </Link>
+                    {/* <a href="#">Meus Influencers</a> */}
                 </li>
                 <li>
-                    <a href="#">Procurar Influencers</a>
+                    <Link to="influencers"> Procurar Influencers </Link>
+                    {/* <a href="#">Procurar Influencers</a> */}
                 </li>
             </ul>
 
