@@ -9,6 +9,7 @@ import { SocialMediaIconsReact } from 'social-media-icons-react';
 import { SocialIcon } from 'react-social-icons';
 import MyProfile from '../Components/Profile';
 import { Switch, Route, Link } from 'react-router-dom';
+import MeetInfluencer from '../Components/MeetInfluencer';
 
 
 import "../styles/Profile.css"
@@ -40,7 +41,7 @@ export default function MeetInfluencers() {
     <div class="wrapper">
        
         <NavBar user={user}/>
-        <h1>meet influencer</h1>
+        <MeetInfluencer />
         
     </div>
     </>
