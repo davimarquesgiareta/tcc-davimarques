@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import apiState from '../apiState';
 import api from '../api'
+import {
+  BrowserRouter as Router, 
+  Route,
+  Link
+} from 'react-router-dom'
+
+
 
 export default function MeetInfluencer(){
 
@@ -157,7 +164,17 @@ export default function MeetInfluencer(){
   }
 
   return(
-    <>
+    <Router>
+    
+      <p>
+        <Link to='/testex'>Teste </Link>
+      </p>
+
+      
+        
+      
+      
+    
       <div className="ml-3 mt-2">
         <h4>Procure seu influencer</h4>
         <div class="row">
@@ -490,6 +507,6 @@ export default function MeetInfluencer(){
             }
             
         </div>
-    </>
+    </Router>
   )
 }
