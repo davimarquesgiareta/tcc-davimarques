@@ -147,22 +147,13 @@ export default function MeetInfluencer(){
 
     console.log("USUAIO", users)
 
-     api
-    .post('/users', {
-      city: "",
-      state: "AC",
-      politic: "Liberal",
-      followers: 900,
-      religiosity: "Ateu",
-      tags: ["tecnico", "area da saude","xbw","gae", "ui"] 
-    })
-    // .then((response) => setTags(response.data))
+    api
+    .post('/users', users)
     .then((response) => setUsers(response.data))
     .catch((err) => {
       console.error("ops! ocorreu um erro" + err);
     })
-
-    
+ 
   }
 
   return(
@@ -436,12 +427,7 @@ export default function MeetInfluencer(){
                         </>
                         )
                       })
-                       
-
-                      
                     }
-                  
-                 
                 </div>
                 
                  </>
