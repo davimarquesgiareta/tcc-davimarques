@@ -15,16 +15,16 @@ export default function NavBar(props){
             <ul class="list-unstyled components">
                 <p>Influencers Search 1.0</p>
                 <li class="active">
-                    <Link to="profile"> Meu Perfil </Link>
+                    <Link to="/profile"> Meu Perfil </Link>
                     {/* <a href="#homeSubmenu">Meu Perfil</a> */}
                 </li>
                 <li>
-                    <Link to="meusinfluencers"> Meus Influencers </Link>
+                    <Link to="/meusinfluencers"> Meus Influencers </Link>
                     {/* <a href="#">Meus Influencers</a> */}
                 </li>
                 <li>
-                    <Link to="influencers"> Procurar Influencers </Link>
-                    {/* <a href="#">Procurar Influencers</a> */}
+                    <Link to="/influencers"> Procurar Influencers </Link>
+                    {/* <a href="influencers">Procurar Influencers</a> */}
                 </li>
             </ul>
 

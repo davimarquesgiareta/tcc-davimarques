@@ -1,15 +1,60 @@
-import React from "react"
+import React, {useState, useEffect} from "react"
+import api from "../api";
 import { SocialIcon } from 'react-social-icons';
 
 export default function MyProfile (props){
-  const {user } = props
+  const {user , flagMyProfile } = props
+
+  const [myInfluencers, setMyInfluencers] = useState([])
+  const [isMyInfluencer, setIsMyInfluencer] = useState(false)
+
+  const emailStorage = localStorage.getItem('email');
+  const email = emailStorage.replace(/['"]+/g, '')
+
+  useEffect(() => {
+    api
+    .get(`/user/${email}`)
+    .then((response) => setMyInfluencers(response.data.user.myInfluencers))
+    .catch((err) => {
+      console.error("ops! ocorreu um erro" + err);
+    })
+  }, []);
+
+ async function addInfluencer(){
+    console.log("me: ", email)
+    console.log("influencer",user.email)
+
+    var flagAdd = true
+
+    myInfluencers.forEach(element => {
+      if (element.email === user.email || element.email === email){
+        flagAdd = false
+        alert("Este Influencer já está na sua lista")
+      }
+    });
+
+    if (flagAdd){
+      await api
+      .post('/addinfluencer',{me: email, influencer:user.email})
+      .then((response) => alert("Influencer Adicionado a sua lista!") )
+      .catch((err) => {
+        console.error("ops! ocorreu um erro" + err);
+      })
+
+      window.location.reload()
+
+    }
+   
+  }
 
   return(
     <div id="content">
 
                     
-
-            <h2>Meu Perfil </h2>
+            {
+              flagMyProfile === true ? '' : <h2>Meu Perfil </h2>
+            }
+            
             <p> <strong>Nome:</strong> {user.name} </p>
             <p> <strong>Cidade:</strong> {user.city} </p>
             <p> <strong>Posição Política:</strong> {user.politic} </p>
@@ -17,6 +62,7 @@ export default function MyProfile (props){
             <p> <strong>Minhas Tags: </strong> 
             {user.tags + ''}
             </p>
+            <p> <strong>Seguidores:</strong> {user.followers} </p>
 
             
 
@@ -35,12 +81,14 @@ export default function MyProfile (props){
                   {
                     user.socialMedias[0] !== '' ? 
                     <div style={{marginRight: "10px"}} >
-                    <SocialIcon  url={user.socialMedias[0]}/>  
+                    
+                    <SocialIcon target="_blank"  url={user.socialMedias[0]}/>  
+                    
                     </div>
                     : ''
                   }
                   {
-                    user.socialMedias[1] !== '' ? <SocialIcon  url={user.socialMedias[1]}/>  : ''
+                    user.socialMedias[1] !== '' ? <SocialIcon  target="_blank" url={user.socialMedias[1]}/>  : ''
                   }
                 </>   
               }
@@ -51,7 +99,11 @@ export default function MyProfile (props){
             <i  class="fa fa-whatsapp my-float"></i>
             </a>
 
-            <div class="line"></div>            
+            <div class="line"></div>    
+
+            <div>
+              <button onClick={()=> addInfluencer()} className="btn btn-primary">+ Adicionar a minha lista</button>  
+            </div>        
         </div>
   )
 }

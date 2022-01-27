@@ -25,15 +25,20 @@ export default function Influencer() {
 
   var link = "twitter.com/davizerashow"
 
-  const email = emailStorage.replace(/['"]+/g, '')
+  // const email = emailStorage.replace(/['"]+/g, '')
 
   const { handleLogout } = useContext(Context);
-  
+
+  var url_atual = window.location.href;
+
+  const words = url_atual.split('/');
+  const email = words[4]
+
   useEffect(() => {
     (async () => {
       const { data } = await api.get(`/user/${email}`);
       setUser( data.user )
-      console.log('datinha', data.user)
+      console.log('datolha', data.user)
     })();
   }, []);
 
@@ -46,7 +51,7 @@ export default function Influencer() {
     <>
     <div class="wrapper">
        
-        <NavBar user={user}/>
+        <NavBar user={user} />
 
 
         {/* <main>
@@ -54,8 +59,7 @@ export default function Influencer() {
             <Route path="/perfil" component={MeetInfluencer}/>
           </Switch>
         </main> */}
-        {/* <MyProfile user={user} /> */}
-        <h3>Testex</h3>
+        <MyProfile user={user} flagMyProfile={true}  />
     </div>
     </>
   )

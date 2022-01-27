@@ -9,6 +9,7 @@ import { SocialMediaIconsReact } from 'social-media-icons-react';
 import { SocialIcon } from 'react-social-icons';
 import MyProfile from '../Components/Profile';
 import { Switch, Route, Link } from 'react-router-dom';
+import MyInfluencer from '../Components/MyInfluencer';
 
 
 import "../styles/Profile.css"
@@ -18,7 +19,7 @@ import './../styles/whatsappicon.css'
 
 export default function MyInfluencers() {
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState([])
 
   const emailStorage = localStorage.getItem('email');
   const id = localStorage.getItem('id');
@@ -29,8 +30,8 @@ export default function MyInfluencers() {
   useEffect(() => {
     (async () => {
       const { data } = await api.get(`/user/${email}`);
-      setUser( data.user )
-      console.log('datinha', data.user)
+      setUser( data.user.myInfluencers )
+      console.log('datinha', data.user.myInfluencers)
     })();
   }, []);
 
@@ -40,6 +41,7 @@ export default function MyInfluencers() {
     <div class="wrapper">
        
         <NavBar user={user}/>
+        <MyInfluencer influencers={user} />
         
     </div>
     </>

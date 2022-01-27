@@ -165,16 +165,6 @@ export default function MeetInfluencer(){
 
   return(
     <Router>
-    
-      <p>
-        <Link to='/testex'>Teste </Link>
-      </p>
-
-      
-        
-      
-      
-    
       <div className="ml-3 mt-2">
         <h4>Procure seu influencer</h4>
         <div class="row">
@@ -498,7 +488,11 @@ export default function MeetInfluencer(){
                     </div>
                     <div class="row" >
                         <div class="col-sm d-flex justify-content-end align-items-center">
+                          {/* <Link to="/qualquer"> */}
+                          <a href={`/influencer/${user.email}`}>
                           <button className='btn btn-primary'>Ver Perfil</button>
+                          </a>
+                          {/* </Link> */}
                         </div>
                     </div>
                   </div>
