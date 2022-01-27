@@ -136,6 +136,15 @@ a.download {
     color: #7386D5;
 }
 
+a.download:hover {
+    background: #43518f !important;
+    color: #fff !important;
+}
+
+
+
+
+
 a.article,
 a.article:hover {
     background: #6d7fcc !important;

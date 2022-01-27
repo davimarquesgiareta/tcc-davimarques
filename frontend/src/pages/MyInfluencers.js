@@ -40,7 +40,7 @@ export default function MyInfluencers() {
     <>
     <div class="wrapper">
        
-        <NavBar user={user}/>
+        <NavBar user={user} flagMenu="myinfluencers"/>
         <MyInfluencer influencers={user} />
         
     </div>

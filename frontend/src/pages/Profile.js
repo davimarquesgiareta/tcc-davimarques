@@ -46,7 +46,7 @@ export default function Profile() {
     <>
     <div class="wrapper">
        
-        <NavBar user={user}/>
+        <NavBar user={user} flagMenu="myprofile"/>
 
 
         {/* <main>

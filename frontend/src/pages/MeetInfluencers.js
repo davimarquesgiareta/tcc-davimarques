@@ -40,7 +40,7 @@ export default function MeetInfluencers() {
     <>
     <div class="wrapper">
        
-        <NavBar user={user}/>
+        <NavBar user={user} flagMenu="meetinfluencers" />
         <MeetInfluencer />
         
     </div>
